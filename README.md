@@ -1,6 +1,6 @@
 # Ohjelmistotekniikka, harjoitustyö  
 
-_Harjoitustyön_ kuvaus tulee olemaan tässä. Ensin pitää vain **keksiä**, että mistä aiheesta sen teen.  
+_Harjoitustyön_ kuvaus tulee olemaan tässä. Ensin pitää vain **keksiä** aihe.    
 
 ## Tehtävät  
 ### Viikko 1  
