@@ -1,4 +1,4 @@
-# Ohjelmistotekniikka, harjoitustyö  
+# Ohjelmistotekniikka, harkka    
 
 _Harjoitustyön_ kuvaus tulee olemaan tässä. Ensin pitää vain **keksiä** aihe.    
 
