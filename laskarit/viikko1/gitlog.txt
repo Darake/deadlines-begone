@@ -1,0 +1,116 @@
+commit 9dc758ed3985ab893fc1e31ab89eca315ae9434c
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 20:16:53 2019 +0200
+
+    Muutoksia
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 4d801222486e9c8ddb7e61529100924f487ffc81
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 20:14:03 2019 +0200
+
+    uudet tiedostot
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 777f2309bb20eab804da18c4f755f61feaeba2e3
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 20:06:40 2019 +0200
+
+    Muutosta ekassa ja kolmosessa
+
+ eka.txt    | 2 +-
+ kolmas.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 9fe0b7a3f37a855e63b7b04b75de1976bec86cdb
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 20:04:56 2019 +0200
+
+    tiedosto nimetty ekaksi
+
+ eka.txt      | 17 +++++++++++++++++
+ tiedosto.txt | 17 -----------------
+ 2 files changed, 17 insertions(+), 17 deletions(-)
+
+commit 681ba9c0cca9f10ca76fbd8e1bba801a89529413
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 20:03:59 2019 +0200
+
+    toinen poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 7c950c4d087252d373614e83ac63a185ae211b27
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 20:01:06 2019 +0200
+
+    tiedostoa muokattu
+
+ tiedosto.txt | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
+
+commit 34f1fb3f561636714f614c43fef4a90a2cf39723
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 19:59:46 2019 +0200
+
+    paljon tekstiä
+
+ tiedosto.txt | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+commit 7ca6473ca373cd3c1ffa9d3e0e647e78d28137a1
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 19:55:52 2019 +0200
+
+    lisää lisäyksiä
+
+ stuff/jokin.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 5a0ee5c2947f66b29ddfd70af56bd48db1137762
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 19:54:27 2019 +0200
+
+    toinen ja kolmas muokattu
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 8515a98830f069676eab3892015857a343a4fd94
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 19:53:53 2019 +0200
+
+    kolmas.txt luotu
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 79e1510aa35cbc2078ad236963d674455db92035
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 19:51:43 2019 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit d31f595279c00ae91b09cc235f89defb53b0fb69
+Author: Gert Adamson <adamson.gert@hotmail.com>
+Date:   Wed Mar 13 19:00:06 2019 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
