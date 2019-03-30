@@ -4,6 +4,7 @@ This application helps with keeping track of ongoing courses and their deadlines
 
 ## Documentation  
 [Software requirements specification](https://github.com/Darake/deadlines-begone/blob/master/documentation/Software%20requirements%20specification.md)  
+[Timesheet](https://github.com/Darake/deadlines-begone/blob/master/documentation/timesheet.md)
 
 ## Assignments    
 ### Week 1  
