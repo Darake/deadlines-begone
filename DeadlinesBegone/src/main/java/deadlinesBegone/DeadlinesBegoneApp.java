@@ -1,0 +1,58 @@
+package deadlinesBegone;
+
+import deadlinesBegone.dao.CourseDao;
+import deadlinesBegone.dao.Database;
+import deadlinesBegone.dao.SQLCourseDao;
+import deadlinesBegone.domain.DeadlinesBegoneService;
+import java.io.FileInputStream;
+import java.util.Properties;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+
+public class DeadlinesBegoneApp extends Application {
+    
+    private Stage stage;
+    private DeadlinesBegoneService appService;
+    private Scene scene;
+    
+    @Override
+    public void init() throws Exception {
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("config.properties"));
+        Database db = new Database(properties.getProperty("database"));
+        
+        CourseDao courseDao = new SQLCourseDao(db);
+        this.appService = new DeadlinesBegoneService(courseDao);
+        
+        FXMLController controller = new FXMLController();
+        controller.setAppService(this.appService);
+        controller.setApplication(this);
+        
+        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/fxml/Scene.fxml"));
+        loader.setController(controller);
+        
+        Parent pane = loader.load();
+        this.scene = new Scene(pane);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        
+        this.stage.setTitle("Deadlines Begone");
+        this.stage.setScene(this.scene);
+        this.stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+}
