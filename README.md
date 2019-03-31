@@ -6,7 +6,13 @@ This application helps with keeping track of ongoing courses and their deadlines
 [Software requirements specification](https://github.com/Darake/deadlines-begone/blob/master/documentation/Software%20requirements%20specification.md)  
 [Timesheet](https://github.com/Darake/deadlines-begone/blob/master/documentation/timesheet.md)
 
-## Assignments    
-### Week 1  
-[gitlog](https://github.com/Darake/ot-harkka/blob/master/laskarit/viikko1/gitlog.txt)  
-[komentorivi](https://github.com/Darake/ot-harkka/blob/master/laskarit/viikko1/komentorivi.txt)
+## Terminal commands  
+
+### Testing  
+Run tests with the following command  
+
+```mvn test```  
+
+Code coverage report for tests can be created with  
+
+```mvn jacoco:report```  
