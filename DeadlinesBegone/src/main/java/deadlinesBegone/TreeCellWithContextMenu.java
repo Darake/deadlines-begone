@@ -3,9 +3,6 @@ package deadlinesBegone;
 
 import deadlinesBegone.domain.Course;
 import deadlinesBegone.domain.DeadlinesBegoneService;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
