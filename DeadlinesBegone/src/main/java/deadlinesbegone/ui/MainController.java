@@ -1,8 +1,8 @@
-package deadlinesBegone.ui;
+package deadlinesbegone.ui;
 
-import deadlinesBegone.domain.Assignment;
-import deadlinesBegone.domain.Course;
-import deadlinesBegone.domain.DeadlinesBegoneService;
+import deadlinesbegone.domain.Assignment;
+import deadlinesbegone.domain.Course;
+import deadlinesbegone.domain.DeadlinesBegoneService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -73,7 +73,7 @@ public class MainController implements Initializable {
         for (TreeItem<String> courseNode : root.getChildren()) {
             if (courseNode.getValue().contentEquals(assignment.getCourse().getName())) {
                 courseNode.getChildren().add(treeAssignment);
-                 break;
+                break;
             }
         }
     }
@@ -113,7 +113,7 @@ public class MainController implements Initializable {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        treeView.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
+        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
             @Override
             public TreeCell<String> call(TreeView<String> p) {
                 return new TreeCellWithContextMenu(appService, content, mainController);

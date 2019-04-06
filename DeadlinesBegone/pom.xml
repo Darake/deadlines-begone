@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>deadlinesBegone.ui.DeadlinesBegoneApp</mainClass>
+        <mainClass>deadlinesbegone.ui.DeadlinesBegoneApp</mainClass>
     </properties>
     
     <dependencies>
@@ -129,7 +129,7 @@
             <version>0.8.3</version>
             <configuration>
                 <excludes>
-                    <exclude>deadlinesBegone/ui/*</exclude>
+                    <exclude>deadlinesbegone/ui/*</exclude>
                     <exclude>org/sqlite/*/*</exclude>
                     <exclude>org/sqlite/*</exclude>
                 </excludes>
@@ -142,7 +142,20 @@
                     </goals>
                 </execution>
             </executions>
-        </plugin>  
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.5</version>
+            </plugin>
         </plugins>
     </build>
 

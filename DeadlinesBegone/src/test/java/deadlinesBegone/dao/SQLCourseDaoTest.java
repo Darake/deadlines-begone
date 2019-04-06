@@ -1,6 +1,9 @@
 package deadlinesBegone.dao;
 
-import deadlinesBegone.domain.Course;
+import deadlinesbegone.dao.SQLCourseDao;
+import deadlinesbegone.dao.Database;
+import deadlinesbegone.dao.Dao;
+import deadlinesbegone.domain.Course;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;

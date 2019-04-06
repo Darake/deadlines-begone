@@ -1,8 +1,8 @@
-package deadlinesBegone.ui;
+package deadlinesbegone.ui;
 
-import deadlinesBegone.dao.Database;
-import deadlinesBegone.dao.SQLCourseDao;
-import deadlinesBegone.domain.DeadlinesBegoneService;
+import deadlinesbegone.dao.Database;
+import deadlinesbegone.dao.SQLCourseDao;
+import deadlinesbegone.domain.DeadlinesBegoneService;
 import java.io.FileInputStream;
 import java.util.Properties;
 import javafx.application.Application;
@@ -11,8 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import deadlinesBegone.dao.Dao;
-import deadlinesBegone.dao.SQLAssignmentDao;
+import deadlinesbegone.dao.Dao;
+import deadlinesbegone.dao.SQLAssignmentDao;
 
 
 public class DeadlinesBegoneApp extends Application {

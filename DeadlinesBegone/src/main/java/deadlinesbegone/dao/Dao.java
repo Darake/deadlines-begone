@@ -1,4 +1,4 @@
-package deadlinesBegone.dao;
+package deadlinesbegone.dao;
 
 import java.sql.SQLException;
 import java.util.List;

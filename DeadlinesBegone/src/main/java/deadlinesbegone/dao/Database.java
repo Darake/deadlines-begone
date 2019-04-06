@@ -1,5 +1,5 @@
 
-package deadlinesBegone.dao;
+package deadlinesbegone.dao;
 
 import java.io.File;
 import java.sql.*;
@@ -9,7 +9,7 @@ public class Database {
     private String databaseAddress;
     
     public Database(String databaseName) throws ClassNotFoundException, SQLException {
-        this.databaseAddress = "jdbc:sqlite:"+databaseName;
+        this.databaseAddress = "jdbc:sqlite:" + databaseName;
         File file = new File(databaseName);
         if (!file.exists()) {
             createNewDatabase();
@@ -25,7 +25,7 @@ public class Database {
         Connection conn = DriverManager.getConnection(this.databaseAddress);
         if (conn != null) {
             DatabaseMetaData meta = conn.getMetaData();
-            System.out.println("The driver name is " +meta.getDriverName());
+            System.out.println("The driver name is " + meta.getDriverName());
             System.out.println("A new database has been created");
         }
         
@@ -47,14 +47,9 @@ public class Database {
                 + "   REFERENCES course(course_id)\n"
                 + " );";
         
-        PreparedStatement courseStmt = conn.prepareStatement(courseTable);
-        PreparedStatement assignmentStmt = conn.prepareStatement(assignmentTable);
-        courseStmt.execute();
-        assignmentStmt.execute();
-        
-        courseStmt.close();
-        assignmentStmt.close();
-        
+        conn.prepareStatement(courseTable).execute();
+        conn.prepareStatement(assignmentTable).execute();
+  
         conn.close();
     }
 }

@@ -1,9 +1,9 @@
 
-package deadlinesBegone.ui;
+package deadlinesbegone.ui;
 
-import deadlinesBegone.domain.Assignment;
-import deadlinesBegone.domain.Course;
-import deadlinesBegone.domain.DeadlinesBegoneService;
+import deadlinesbegone.domain.Assignment;
+import deadlinesbegone.domain.Course;
+import deadlinesbegone.domain.DeadlinesBegoneService;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

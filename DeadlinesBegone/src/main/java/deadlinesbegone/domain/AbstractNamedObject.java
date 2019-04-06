@@ -1,5 +1,5 @@
 
-package deadlinesBegone.domain;
+package deadlinesbegone.domain;
 
 public abstract class AbstractNamedObject {
     

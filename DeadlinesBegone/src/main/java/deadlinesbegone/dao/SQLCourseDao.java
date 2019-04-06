@@ -1,7 +1,7 @@
 
-package deadlinesBegone.dao;
+package deadlinesbegone.dao;
 
-import deadlinesBegone.domain.Course;
+import deadlinesbegone.domain.Course;
 import java.sql.*;
 
 public class SQLCourseDao extends AbstractNamedObjectDao<Course> {
@@ -23,7 +23,7 @@ public class SQLCourseDao extends AbstractNamedObjectDao<Course> {
     }
 
     @Override
-    public Course createFromRow(ResultSet rs) throws SQLException{
+    public Course createFromRow(ResultSet rs) throws SQLException {
         return new Course(rs.getInt("id"), rs.getString("name"));
     }
 

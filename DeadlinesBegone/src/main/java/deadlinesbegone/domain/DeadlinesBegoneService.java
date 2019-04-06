@@ -1,17 +1,17 @@
 
-package deadlinesBegone.domain;
+package deadlinesbegone.domain;
 
 import java.util.List;
-import deadlinesBegone.dao.Dao;
+import deadlinesbegone.dao.Dao;
 import java.sql.SQLException;
 
 public class DeadlinesBegoneService {
     private Dao courseDao;
-    private Dao AssignmentDao;
+    private Dao assigmentDao;
     
-    public DeadlinesBegoneService(Dao courseDao, Dao AssignmentDao) {
+    public DeadlinesBegoneService(Dao courseDao, Dao assigmentDao) {
         this.courseDao = courseDao;
-        this.AssignmentDao = AssignmentDao;
+        this.assigmentDao = assigmentDao;
     }
     
     public List<Course> getCourses() throws SQLException {
@@ -19,18 +19,18 @@ public class DeadlinesBegoneService {
     }
     
     public Course newCourse(Course course) throws SQLException {
-        return (Course)courseDao.create(course);
+        return (Course) courseDao.create(course);
     }
     
     public Course getCourseByName(String name) throws SQLException {
-        return (Course)courseDao.findByName(name);
+        return (Course) courseDao.findByName(name);
     }
     
     public Assignment newAssignment(Assignment assignment) throws SQLException {
-        return (Assignment)AssignmentDao.create(assignment);
+        return (Assignment) assigmentDao.create(assignment);
     }
     
     public List<Assignment> getAssignments() throws SQLException {
-        return AssignmentDao.getAll();
+        return assigmentDao.getAll();
     }
 }

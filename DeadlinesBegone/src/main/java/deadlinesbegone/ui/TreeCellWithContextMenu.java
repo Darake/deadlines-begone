@@ -1,8 +1,8 @@
 
-package deadlinesBegone.ui;
+package deadlinesbegone.ui;
 
-import deadlinesBegone.domain.Course;
-import deadlinesBegone.domain.DeadlinesBegoneService;
+import deadlinesbegone.domain.Course;
+import deadlinesbegone.domain.DeadlinesBegoneService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

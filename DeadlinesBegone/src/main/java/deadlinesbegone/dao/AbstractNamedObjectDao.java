@@ -1,7 +1,7 @@
 
-package deadlinesBegone.dao;
+package deadlinesbegone.dao;
 
-import deadlinesBegone.domain.AbstractNamedObject;
+import deadlinesbegone.domain.AbstractNamedObject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,7 +56,7 @@ public abstract class AbstractNamedObjectDao<T extends AbstractNamedObject>
     
     public T findByName(String name) throws SQLException {
         try (Connection conn = database.getConnection()) {
-            String sql = "SELECT * FROM "+tableName+ " WHERE name = ?";
+            String sql = "SELECT * FROM " + tableName + " WHERE name = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
             

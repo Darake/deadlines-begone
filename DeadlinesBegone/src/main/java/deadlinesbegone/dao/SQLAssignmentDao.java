@@ -1,14 +1,14 @@
 
-package deadlinesBegone.dao;
+package deadlinesbegone.dao;
 
-import deadlinesBegone.domain.Assignment;
-import deadlinesBegone.domain.Course;
+import deadlinesbegone.domain.Assignment;
+import deadlinesbegone.domain.Course;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SQLAssignmentDao extends AbstractNamedObjectDao<Assignment>{
+public class SQLAssignmentDao extends AbstractNamedObjectDao<Assignment> {
     
     private Dao courseDao;
 
@@ -32,7 +32,7 @@ public class SQLAssignmentDao extends AbstractNamedObjectDao<Assignment>{
 
     @Override
     public Assignment createFromRow(ResultSet rs) throws SQLException {
-        Course course = (Course)courseDao.get(rs.getInt("course_id"));
+        Course course = (Course) courseDao.get(rs.getInt("course_id"));
         return new Assignment(rs.getInt("id"), rs.getString("name"), rs.getString("deadline"), course);
     }
 
