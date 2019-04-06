@@ -1,4 +1,4 @@
-package deadlinesBegone;
+package deadlinesBegone.ui;
 
 import deadlinesBegone.dao.Database;
 import deadlinesBegone.dao.SQLCourseDao;

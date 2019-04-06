@@ -1,4 +1,4 @@
-package deadlinesBegone;
+package deadlinesBegone.ui;
 
 import deadlinesBegone.domain.Assignment;
 import deadlinesBegone.domain.Course;

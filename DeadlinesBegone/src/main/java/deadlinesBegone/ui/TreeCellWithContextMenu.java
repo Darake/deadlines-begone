@@ -1,5 +1,5 @@
 
-package deadlinesBegone;
+package deadlinesBegone.ui;
 
 import deadlinesBegone.domain.Course;
 import deadlinesBegone.domain.DeadlinesBegoneService;
