@@ -1,21 +1,9 @@
 
 package deadlinesBegone.domain;
 
-public class Course {
+public class Course extends AbstractNamedObject {
     
-    private int id;
-    private String name;
-    
-    public Course(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-    
-    public Course(String name) {
-        this.name = name;
-    }
-    
-    public String getName() {
-        return this.name;
+    public Course(Integer id, String name) {
+        super(id, name);
     }
 }

@@ -1,6 +1,5 @@
 package deadlinesBegone;
 
-import deadlinesBegone.dao.CourseDao;
 import deadlinesBegone.dao.Database;
 import deadlinesBegone.dao.SQLCourseDao;
 import deadlinesBegone.domain.DeadlinesBegoneService;
@@ -12,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import deadlinesBegone.dao.Dao;
+import deadlinesBegone.dao.SQLAssignmentDao;
 
 
 public class DeadlinesBegoneApp extends Application {
@@ -26,13 +27,12 @@ public class DeadlinesBegoneApp extends Application {
         properties.load(new FileInputStream("config.properties"));
         Database db = new Database(properties.getProperty("database"));
         
-        CourseDao courseDao = new SQLCourseDao(db);
-        this.appService = new DeadlinesBegoneService(courseDao);
+        Dao courseDao = new SQLCourseDao(db, "course");
+        Dao assignmentDao = new SQLAssignmentDao(db, "assignment", courseDao);
+        this.appService = new DeadlinesBegoneService(courseDao, assignmentDao);
         
-        FXMLController controller = new FXMLController();
+        MainController controller = new MainController();
         controller.setAppService(this.appService);
-        controller.setApplication(this);
-        
         
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/Scene.fxml"));

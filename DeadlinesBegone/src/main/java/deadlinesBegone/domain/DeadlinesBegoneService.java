@@ -1,21 +1,36 @@
 
 package deadlinesBegone.domain;
 
-import deadlinesBegone.dao.CourseDao;
 import java.util.List;
+import deadlinesBegone.dao.Dao;
+import java.sql.SQLException;
 
 public class DeadlinesBegoneService {
-    private CourseDao courseDao;
+    private Dao courseDao;
+    private Dao AssignmentDao;
     
-    public DeadlinesBegoneService(CourseDao courseDao) {
+    public DeadlinesBegoneService(Dao courseDao, Dao AssignmentDao) {
         this.courseDao = courseDao;
+        this.AssignmentDao = AssignmentDao;
     }
     
-    public List<Course> getCourses() throws Exception {
-        return this.courseDao.getAll();
+    public List<Course> getCourses() throws SQLException {
+        return courseDao.getAll();
     }
     
-    public void newCourse(Course course) throws Exception {
-        this.courseDao.create(course);
+    public Course newCourse(Course course) throws SQLException {
+        return (Course)courseDao.create(course);
+    }
+    
+    public Course getCourseByName(String name) throws SQLException {
+        return (Course)courseDao.findByName(name);
+    }
+    
+    public Assignment newAssignment(Assignment assignment) throws SQLException {
+        return (Assignment)AssignmentDao.create(assignment);
+    }
+    
+    public List<Assignment> getAssignments() throws SQLException {
+        return AssignmentDao.getAll();
     }
 }

@@ -33,14 +33,28 @@ public class Database {
     }
 
     private void createTables(Connection conn) throws SQLException {
-        String sql = "CREATE TABLE Course (\n"
+        String courseTable = "CREATE TABLE Course (\n"
                 + " id integer PRIMARY KEY,\n"
                 + " name varchar(50) NOT NULL\n"
                 + " );";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.execute();
+        String assignmentTable = "CREATE TABLE Assignment (\n"
+                + " id integer PRIMARY KEY,\n"
+                + " name varchar(100) NOT NULL,\n"
+                + " deadline varchar(10) NOT NULL,\n"
+                + " course_id integer NOT NULL,\n"
+                + " CONSTRAINT fk_course\n"
+                + "   FOREIGN KEY (course_id)\n"
+                + "   REFERENCES course(course_id)\n"
+                + " );";
         
-        stmt.close();
+        PreparedStatement courseStmt = conn.prepareStatement(courseTable);
+        PreparedStatement assignmentStmt = conn.prepareStatement(assignmentTable);
+        courseStmt.execute();
+        assignmentStmt.execute();
+        
+        courseStmt.close();
+        assignmentStmt.close();
+        
         conn.close();
     }
 }
