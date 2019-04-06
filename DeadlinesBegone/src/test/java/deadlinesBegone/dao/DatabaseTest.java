@@ -2,6 +2,8 @@ package deadlinesBegone.dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -35,6 +37,15 @@ public class DatabaseTest {
         Database db = new Database(tempFolder.getAbsolutePath()+"/testDB.db");
         
         assertEquals(true, file.exists());
+    }
+    
+    @Test
+    public void getConnectionReturnsValidConnection() throws IOException, ClassNotFoundException, SQLException {
+        File tempFolder = testFolder.newFolder("folder");
+        Database db = new Database(tempFolder.getAbsolutePath()+"/testDB.db");
+        Connection connection = db.getConnection();
+        
+        assertEquals(connection != null, true);
     }
 
 }
