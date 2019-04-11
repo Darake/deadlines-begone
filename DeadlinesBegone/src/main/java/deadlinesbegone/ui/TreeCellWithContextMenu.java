@@ -1,50 +1,74 @@
 
 package deadlinesbegone.ui;
 
+import deadlinesbegone.domain.AbstractNamedObject;
+import deadlinesbegone.domain.Assignment;
 import deadlinesbegone.domain.Course;
-import deadlinesbegone.domain.DeadlinesBegoneService;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import java.io.IOException;
+import java.sql.SQLException;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.TreeItem;
+import javafx.scene.image.ImageView;
 
-public class TreeCellWithContextMenu extends TreeCell<String> {
+public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
     
     private ContextMenu courseMenu;
-    
-    public TreeCellWithContextMenu(DeadlinesBegoneService appService, AnchorPane content, MainController mainController) {
+    private ContextMenu assignmentMenu;
+
+    public TreeCellWithContextMenu(MainController mainController) {
+
         MenuItem newAssignment = new MenuItem("New Assignment");
+        newAssignment.setOnAction(e -> {
+            try {
+                mainController.changeViewToNewAssignment((Course) getTreeItem().getValue());
+            } catch (IOException ex) {
+                mainController.error(ex);
+            }
+        });
+        MenuItem deleteCourse = new MenuItem("Delete");
+        deleteCourse.setOnAction(e -> {
+            TreeItem item = (TreeItem) mainController.treeView.getSelectionModel().getSelectedItem();
+            item.getParent().getChildren().remove(item);
+            try {
+                mainController.appService.deleteCourse((Course) item.getValue());
+            } catch (SQLException ex) {
+                mainController.error(ex);
+            }
+        });
         courseMenu = new ContextMenu();
         courseMenu.getItems().add(newAssignment);
-        newAssignment.setOnAction(e -> {
-            NewAssignmentController controller = new NewAssignmentController();
-            controller.setAppService(appService);
-            controller.setMainController(mainController);
-            Course course;
+        courseMenu.getItems().add(deleteCourse);
+        
+        MenuItem markDone = new MenuItem("Mark done");
+        markDone.setOnAction(e -> {
+            ImageView checkmarkView = new ImageView(mainController.checkmark);
+            getTreeItem().setGraphic(checkmarkView);
+            setGraphic(checkmarkView);
             try {
-                course = appService.getCourseByName(getTreeItem().getValue());
-                controller.setCourse(course);
-                FXMLLoader loader = new FXMLLoader(DeadlinesBegoneApp.class.getResource("/fxml/NewAssignment.fxml"));
-                loader.setController(controller);
-                AnchorPane pane;
-                pane = loader.load();
-                content.getChildren().clear();
-                content.getChildren().add(pane);
-            } catch (Exception ex) {
-                System.out.println(ex);
-                Alert error = new Alert(AlertType.ERROR);
-                error.setHeaderText("Something went wrong");
-                error.setContentText(ex.toString());
-                error.showAndWait();
-            }         
+                mainController.appService.markAssignmentDone((Assignment) getTreeItem().getValue());
+            } catch (SQLException ex) {
+                mainController.error(ex);
+            }
         });
+        MenuItem deleteAssignment = new MenuItem("Delete");
+        deleteAssignment.setOnAction(e -> {
+            TreeItem item = (TreeItem) mainController.treeView.getSelectionModel().getSelectedItem();
+            item.getParent().getChildren().remove(item);
+            try {
+                mainController.appService.deleteAssignment((Assignment) item.getValue());
+            } catch (SQLException ex) {
+                mainController.error(ex);
+            }
+        });
+        assignmentMenu = new ContextMenu();
+        assignmentMenu.getItems().add(markDone);
+        assignmentMenu.getItems().add(deleteAssignment);
     }
     
     @Override
-    public void updateItem(String item, boolean empty) {
+    public void updateItem(AbstractNamedObject item, boolean empty) {
         super.updateItem(item, empty);
         
         if (empty) {
@@ -53,8 +77,10 @@ public class TreeCellWithContextMenu extends TreeCell<String> {
         } else {
             setText(getItem().toString());
             setGraphic(getTreeItem().getGraphic());
-            if (getTreeItem().getParent().getValue().contentEquals("Root")) {
+            if (getTreeItem().getParent().getValue().toString().contentEquals("Root")) {
                 setContextMenu(courseMenu);
+            } else if (getTreeItem().getParent().getParent().getValue().toString().contentEquals("Root")) {
+                setContextMenu(assignmentMenu);
             } else {
                 setContextMenu(null);
             }

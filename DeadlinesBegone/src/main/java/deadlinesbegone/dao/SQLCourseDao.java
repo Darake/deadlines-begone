@@ -27,4 +27,9 @@ public class SQLCourseDao extends AbstractNamedObjectDao<Course> {
         return new Course(rs.getInt("id"), rs.getString("name"));
     }
 
+    @Override
+    public void update(Course object) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -41,8 +41,8 @@ public class NewAssignmentController implements Initializable {
     }
     
     public void handleAddAssignment(ActionEvent event) throws Exception {
-        Assignment assignment = new Assignment(null, name.getText(), deadline.getValue().toString(), course);
-        appService.newAssignment(assignment);
+        Assignment assignment = new Assignment(null, name.getText(), deadline.getValue().toString(), course, false);
+        assignment = appService.newAssignment(assignment);
         mainController.addAssignmentToTree(assignment);
         mainController.clearContent();
     }

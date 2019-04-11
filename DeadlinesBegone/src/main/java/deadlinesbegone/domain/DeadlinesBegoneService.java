@@ -22,6 +22,14 @@ public class DeadlinesBegoneService {
         return (Course) courseDao.create(course);
     }
     
+    public void deleteCourse(Course course) throws SQLException {
+        courseDao.delete(course.getId());
+    }
+    
+    public Course getCourse(Integer id) throws SQLException {
+        return (Course) courseDao.get(id);
+    }
+    
     public Course getCourseByName(String name) throws SQLException {
         return (Course) courseDao.findByName(name);
     }
@@ -32,5 +40,14 @@ public class DeadlinesBegoneService {
     
     public List<Assignment> getAssignments() throws SQLException {
         return assigmentDao.getAll();
+    }
+
+    public void markAssignmentDone(Assignment assignment) throws SQLException {
+        assignment.setCompleted(true);
+        assigmentDao.update(assignment);
+    }
+
+    public void deleteAssignment(Assignment assignment) throws SQLException {
+        assigmentDao.delete(assignment.getId());
     }
 }

@@ -69,8 +69,20 @@ public abstract class AbstractNamedObjectDao<T extends AbstractNamedObject>
         }   
     }
     
+    public void delete(Integer id) throws SQLException {
+        try (Connection conn = database.getConnection()) {
+            String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+    }
+    
     @Override
     public abstract T create(T object) throws SQLException;
+    
+    @Override
+    public abstract void update(T object) throws SQLException;
 
     public abstract T createFromRow(ResultSet rs) throws SQLException;
 }

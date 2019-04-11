@@ -1,8 +1,10 @@
 package deadlinesbegone.ui;
 
+import deadlinesbegone.domain.AbstractNamedObject;
 import deadlinesbegone.domain.Assignment;
 import deadlinesbegone.domain.Course;
 import deadlinesbegone.domain.DeadlinesBegoneService;
+import deadlinesbegone.domain.TreeViewObject;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -15,30 +17,42 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
 public class MainController implements Initializable {
-    private DeadlinesBegoneService appService;
-    private TreeItem<String> root;
+    public DeadlinesBegoneService appService;
+    private TreeItem<AbstractNamedObject> root;
     private MainController mainController = this;
+    public Image checkmark = new Image(getClass().getResourceAsStream("/checkmark.png"));
 
     @FXML
-    private TreeView treeView;
+    public TreeView treeView;
     
     @FXML
-    private AnchorPane content;
+    public AnchorPane content;
     
     public void setAppService(DeadlinesBegoneService appService) {
         this.appService = appService;
+    }
+    
+    public void changeViewToNewAssignment(Course course) throws IOException {
+        NewAssignmentController controller = new NewAssignmentController();
+        controller.setAppService(appService);
+        controller.setMainController(this);
+        controller.setCourse(course);
+        FXMLLoader loader = new FXMLLoader(DeadlinesBegoneApp.class.getResource("/fxml/NewAssignment.fxml"));
+        loader.setController(controller);
+        AnchorPane pane = loader.load();
+        content.getChildren().clear();
+        content.getChildren().add(pane);    
     }
 
     @FXML
@@ -63,15 +77,21 @@ public class MainController implements Initializable {
     
     @FXML
     private void addCourseToTree(Course course) {
-        TreeItem<String> treeCourse = new TreeItem<String>(course.getName());
+        TreeItem<AbstractNamedObject> treeCourse = new TreeItem<AbstractNamedObject>(course);
         root.getChildren().add(treeCourse);
     }
     
     @FXML
     public void addAssignmentToTree(Assignment assignment) {
-        TreeItem<String> treeAssignment = new TreeItem<String>(assignment.getName());
-        for (TreeItem<String> courseNode : root.getChildren()) {
-            if (courseNode.getValue().contentEquals(assignment.getCourse().getName())) {
+        TreeItem<AbstractNamedObject> treeAssignment = new TreeItem<AbstractNamedObject>(assignment);
+        if (assignment.getCompleted()) {
+            treeAssignment.setGraphic(new ImageView(checkmark));
+        }
+        TreeViewObject deadline = new TreeViewObject(assignment.getId(), assignment.getDeadline());
+        TreeItem<AbstractNamedObject> treeDeadline = new TreeItem<AbstractNamedObject>(deadline);
+        treeAssignment.getChildren().add(treeDeadline);
+        for (TreeItem<AbstractNamedObject> courseNode : root.getChildren()) {
+            if (courseNode.getValue().toString().contentEquals(assignment.getCourse().getName())) {
                 courseNode.getChildren().add(treeAssignment);
                 break;
             }
@@ -81,12 +101,12 @@ public class MainController implements Initializable {
     private void loadCourses() throws SQLException {
         List<Course> courses = appService.getCourses();
         for (Course course : courses) {
-            TreeItem<String> courseNode = new TreeItem<String>(course.getName());
+            TreeItem<AbstractNamedObject> courseNode = new TreeItem<AbstractNamedObject>(course);
             root.getChildren().add(courseNode);
         }
     }
     
-    private void loadAssignments(TreeItem<String> allAssigments) throws SQLException {
+    private void loadAssignments() throws SQLException {
         List<Assignment> assignments = appService.getAssignments();
         for (Assignment assignment : assignments) {
             addAssignmentToTree(assignment);
@@ -97,26 +117,33 @@ public class MainController implements Initializable {
         content.getChildren().clear();
     }
     
+    public void error(Exception e) {
+        Alert error = new Alert(Alert.AlertType.ERROR);
+        error.setHeaderText("Something went wrong");
+        error.setContentText(e.toString());
+        error.showAndWait();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        root = new TreeItem<String>("Root");
-        TreeItem<String> allAssigments = new TreeItem<String>("All assigments");
+        root = new TreeItem<AbstractNamedObject>(new TreeViewObject(null, "Root"));
         treeView.setRoot(root);
         treeView.setShowRoot(false);
+        treeView.setStyle("-fx-focus-color: transparen;");
         
         try {
             loadCourses();
-            loadAssignments(allAssigments);
+            loadAssignments();
         } catch (SQLException ex) {
             System.out.println(ex);
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<AbstractNamedObject>>() {
             @Override
-            public TreeCell<String> call(TreeView<String> p) {
-                return new TreeCellWithContextMenu(appService, content, mainController);
+            public TreeCell<AbstractNamedObject> call(TreeView<String> p) {
+                return new TreeCellWithContextMenu(mainController);
               
             }
         });

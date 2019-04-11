@@ -3,13 +3,17 @@ package deadlinesbegone.dao;
 
 import java.io.File;
 import java.sql.*;
+import org.sqlite.SQLiteConfig;
 
 public class Database {
     
     private String databaseAddress;
+    private String databaseDriver;
     
     public Database(String databaseName) throws ClassNotFoundException, SQLException {
         this.databaseAddress = "jdbc:sqlite:" + databaseName;
+        this.databaseDriver = "org.sqlite.JDBC";
+        Class.forName(databaseDriver);
         File file = new File(databaseName);
         if (!file.exists()) {
             createNewDatabase();
@@ -17,7 +21,15 @@ public class Database {
     }
     
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(databaseAddress);
+        Connection connection = null;
+        try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enforceForeignKeys(true);
+            connection = DriverManager.getConnection(databaseAddress, config.toProperties());
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return connection;
     }
 
     private void createNewDatabase() throws SQLException {
@@ -41,10 +53,12 @@ public class Database {
                 + " id integer PRIMARY KEY,\n"
                 + " name varchar(100) NOT NULL,\n"
                 + " deadline varchar(10) NOT NULL,\n"
+                + " completed boolean NOT NULL,\n"
                 + " course_id integer NOT NULL,\n"
                 + " CONSTRAINT fk_course\n"
                 + "   FOREIGN KEY (course_id)\n"
-                + "   REFERENCES course(course_id)\n"
+                + "   REFERENCES Course(id)\n"
+                + "   ON DELETE CASCADE\n"
                 + " );";
         
         conn.prepareStatement(courseTable).execute();

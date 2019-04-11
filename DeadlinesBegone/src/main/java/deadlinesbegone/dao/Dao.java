@@ -12,4 +12,8 @@ public interface Dao<T, K> {
     T get(K key) throws SQLException;
     
     T findByName(String name) throws SQLException;
+    
+    void update(T object) throws SQLException;
+    
+    void delete(K key) throws SQLException;
 }
