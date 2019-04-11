@@ -20,3 +20,19 @@ Run tests with the following command
 Code coverage report for tests can be created with  
 
 ```mvn jacoco:report```  
+
+Code coverage can be viewed by opening target/site/jacoco/index.html with a browser  
+
+### Generating an executable jar  
+
+```mvn package```  
+
+Jar can be found in the target directory  
+
+### Checkstyle  
+
+Checkstyle report can be generated with  
+
+```mvn jxr:jxr checkstyle:checkstyle```  
+
+Report can be found in target/site/checkstyle.html
