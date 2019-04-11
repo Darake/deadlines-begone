@@ -20,4 +20,13 @@
 | 6.4.19  | 1 | tests for database and dao |  
 | 6.4.19  | 1 | checkstyle |  
 | 6.4.19  | 1 | architecture documentation |   
-| total   | 25|
+| 10.4.19  | 1 | showing assignment deadlines and adding checkmarks to assignments |   
+| 10.4.19  | 1 | marking assignments done |   
+| 11.4.19  | 1 | marking assignments done |   
+| 11.4.19  | 1 | refactoring |   
+| 11.4.19  | 1 | implementing delete functionality for courses |   
+| 11.4.19  | 1 | implementing delete functionality for assignments |   
+| 11.4.19  | 1 | sorting assignments by deadline and creating a test for delete method in dao |   
+| 11.4.19  | 1 | sequence diagram for adding a course |   
+| 11.4.19  | 1 | documentation |   
+| total   | 34|  
