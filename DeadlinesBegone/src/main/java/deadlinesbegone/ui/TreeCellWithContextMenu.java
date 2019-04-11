@@ -6,6 +6,7 @@ import deadlinesbegone.domain.Assignment;
 import deadlinesbegone.domain.Course;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Comparator;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
@@ -79,6 +80,7 @@ public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
             setGraphic(getTreeItem().getGraphic());
             if (getTreeItem().getParent().getValue().toString().contentEquals("Root")) {
                 setContextMenu(courseMenu);
+                getTreeItem().getChildren().sort(Comparator.comparing(a -> a.getChildren().get(0).getValue().toString()));
             } else if (getTreeItem().getParent().getParent().getValue().toString().contentEquals("Root")) {
                 setContextMenu(assignmentMenu);
             } else {
