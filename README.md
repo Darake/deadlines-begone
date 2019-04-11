@@ -5,7 +5,10 @@ This application helps with keeping track of ongoing courses and their deadlines
 ## Documentation  
 [Software requirements specification](https://github.com/Darake/deadlines-begone/blob/master/documentation/Software%20requirements%20specification.md)  
 [Architecture](https://github.com/Darake/deadlines-begone/blob/master/documentation/architecture.md)  
-[Timesheet](https://github.com/Darake/deadlines-begone/blob/master/documentation/timesheet.md)
+[Timesheet](https://github.com/Darake/deadlines-begone/blob/master/documentation/timesheet.md)  
+
+## Releases  
+[Week 5](https://github.com/Darake/deadlines-begone/releases/tag/week5)
 
 ## Terminal commands  
 
