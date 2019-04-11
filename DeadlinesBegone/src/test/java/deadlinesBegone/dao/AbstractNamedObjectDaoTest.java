@@ -17,7 +17,7 @@ import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 
 
-public class SQLCourseDaoTest {
+public class AbstractNamedObjectDaoTest {
     
     public Database database;
     public Dao dao;
@@ -49,8 +49,15 @@ public class SQLCourseDaoTest {
 
     @Test
     public void getReturnsRightCourse() throws SQLException {
-        Course course = (Course)dao.get(2);
+        Course course = (Course) dao.get(2);
         
         assertEquals(course.getName(), "second");
+    }
+    
+    @Test
+    public void deleteRemovesRightObjectFromDatabase() throws SQLException {
+        dao.delete(2);
+        
+        assertEquals(null, dao.get(2));
     }
 }
