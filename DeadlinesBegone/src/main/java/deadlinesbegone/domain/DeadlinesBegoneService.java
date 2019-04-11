@@ -18,7 +18,8 @@ public class DeadlinesBegoneService {
         return courseDao.getAll();
     }
     
-    public Course newCourse(Course course) throws SQLException {
+    public Course newCourse(String name) throws SQLException {
+        Course course = new Course(null, name);
         return (Course) courseDao.create(course);
     }
     

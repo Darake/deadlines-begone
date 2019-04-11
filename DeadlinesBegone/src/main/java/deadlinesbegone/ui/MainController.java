@@ -61,7 +61,7 @@ public class MainController implements Initializable {
                 "Enter course name.");
         
         if (result.isPresent()) {
-            Course course = appService.newCourse(new Course(null, result.get()));
+            Course course = appService.newCourse(result.get());
             addCourseToTree(course);
         }
     }
