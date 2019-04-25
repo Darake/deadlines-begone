@@ -4,10 +4,12 @@ package deadlinesbegone.domain;
 import java.util.List;
 import deadlinesbegone.dao.Dao;
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 public class DeadlinesBegoneService {
     private Dao courseDao;
     private Dao assigmentDao;
+    private List<Assignment> assignments;
     
     public DeadlinesBegoneService(Dao courseDao, Dao assigmentDao) {
         this.courseDao = courseDao;
@@ -24,6 +26,9 @@ public class DeadlinesBegoneService {
     }
     
     public void deleteCourse(Course course) throws SQLException {
+        assignments = assignments.stream()
+                .filter(a -> !a.getCourse().getId().equals(course.getId()))
+                .collect(Collectors.toList());
         courseDao.delete(course.getId());
     }
     
@@ -36,11 +41,14 @@ public class DeadlinesBegoneService {
     }
     
     public Assignment newAssignment(Assignment assignment) throws SQLException {
-        return (Assignment) assigmentDao.create(assignment);
+        Assignment createdAssignment = (Assignment) assigmentDao.create(assignment);
+        assignments.add(createdAssignment);
+        return createdAssignment;
     }
     
     public List<Assignment> getAssignments() throws SQLException {
-        return assigmentDao.getAll();
+        assignments = assigmentDao.getAll();
+        return assignments;
     }
 
     public void markAssignmentDone(Assignment assignment) throws SQLException {
@@ -49,6 +57,11 @@ public class DeadlinesBegoneService {
     }
 
     public void deleteAssignment(Assignment assignment) throws SQLException {
+        assignments.remove(assignment);
         assigmentDao.delete(assignment.getId());
+    }
+    
+    public List<Assignment> getUndoneAssignments() throws SQLException {
+        return assignments.stream().filter(a -> !a.getCompleted()).collect(Collectors.toList());
     }
 }

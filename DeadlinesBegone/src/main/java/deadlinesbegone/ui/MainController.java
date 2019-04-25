@@ -25,6 +25,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 public class MainController implements Initializable {
@@ -54,6 +55,19 @@ public class MainController implements Initializable {
         content.getChildren().clear();
         content.getChildren().add(pane);    
     }
+    
+    public void changeViewToUndone() throws IOException {
+        UndoneController controller = new UndoneController();
+        controller.setMainController(this);
+        FXMLLoader loader = new FXMLLoader(DeadlinesBegoneApp.class.getResource("/fxml/Undone.fxml"));
+        loader.setController(controller);
+        VBox box = loader.load();
+        
+        content.getChildren().clear();
+        content.getChildren().add(box);
+        box.prefWidthProperty().bind(content.widthProperty());
+        box.prefHeightProperty().bind(content.heightProperty());
+    }
 
     @FXML
     public void handleAddCourse(ActionEvent event) throws Exception {
@@ -79,6 +93,7 @@ public class MainController implements Initializable {
     private void addCourseToTree(Course course) {
         TreeItem<AbstractNamedObject> treeCourse = new TreeItem<AbstractNamedObject>(course);
         root.getChildren().add(treeCourse);
+        treeView.refresh();
     }
     
     @FXML
@@ -130,7 +145,7 @@ public class MainController implements Initializable {
         root = new TreeItem<AbstractNamedObject>(new TreeViewObject(null, "Root"));
         treeView.setRoot(root);
         treeView.setShowRoot(false);
-        treeView.setStyle("-fx-focus-color: transparen;");
+        treeView.setStyle("-fx-focus-color: transparent;");
         
         try {
             loadCourses();
@@ -147,5 +162,12 @@ public class MainController implements Initializable {
               
             }
         });
+        
+        try {
+            changeViewToUndone();
+        } catch (IOException ex) {
+            System.out.println(ex);
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 }

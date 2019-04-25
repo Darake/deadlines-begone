@@ -44,7 +44,11 @@ public class NewAssignmentController implements Initializable {
         Assignment assignment = new Assignment(null, name.getText(), deadline.getValue().toString(), course, false);
         assignment = appService.newAssignment(assignment);
         mainController.addAssignmentToTree(assignment);
-        mainController.clearContent();
+        mainController.changeViewToUndone();
+    }
+    
+    public void handleCancel(ActionEvent event) throws Exception {
+        mainController.changeViewToUndone();
     }
 
     @Override

@@ -7,6 +7,8 @@ import deadlinesbegone.domain.Course;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
@@ -17,8 +19,10 @@ public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
     
     private ContextMenu courseMenu;
     private ContextMenu assignmentMenu;
+    private ImageView checkmarkView;
 
     public TreeCellWithContextMenu(MainController mainController) {
+        checkmarkView = new ImageView(mainController.checkmark);
 
         MenuItem newAssignment = new MenuItem("New Assignment");
         newAssignment.setOnAction(e -> {
@@ -34,7 +38,11 @@ public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
             item.getParent().getChildren().remove(item);
             try {
                 mainController.appService.deleteCourse((Course) item.getValue());
+                mainController.clearContent();
+                mainController.changeViewToUndone();
             } catch (SQLException ex) {
+                mainController.error(ex);
+            } catch (IOException ex) {
                 mainController.error(ex);
             }
         });
@@ -44,12 +52,15 @@ public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
         
         MenuItem markDone = new MenuItem("Mark done");
         markDone.setOnAction(e -> {
-            ImageView checkmarkView = new ImageView(mainController.checkmark);
             getTreeItem().setGraphic(checkmarkView);
             setGraphic(checkmarkView);
             try {
                 mainController.appService.markAssignmentDone((Assignment) getTreeItem().getValue());
+                mainController.clearContent();
+                mainController.changeViewToUndone();
             } catch (SQLException ex) {
+                mainController.error(ex);
+            } catch (IOException ex) {
                 mainController.error(ex);
             }
         });
@@ -59,7 +70,11 @@ public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
             item.getParent().getChildren().remove(item);
             try {
                 mainController.appService.deleteAssignment((Assignment) item.getValue());
+                mainController.clearContent();
+                mainController.changeViewToUndone();
             } catch (SQLException ex) {
+                mainController.error(ex);
+            } catch (IOException ex) {
                 mainController.error(ex);
             }
         });
@@ -83,6 +98,11 @@ public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
                 getTreeItem().getChildren().sort(Comparator.comparing(a -> a.getChildren().get(0).getValue().toString()));
             } else if (getTreeItem().getParent().getParent().getValue().toString().contentEquals("Root")) {
                 setContextMenu(assignmentMenu);
+                Assignment assignment = (Assignment) getTreeItem().getValue();
+                if (assignment.getCompleted()) {
+                    getTreeItem().setGraphic(checkmarkView);
+                    setGraphic(checkmarkView);
+                }
             } else {
                 setContextMenu(null);
             }

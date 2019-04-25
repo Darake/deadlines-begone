@@ -12,5 +12,6 @@
       <TextField fx:id="name" layoutX="9.0" layoutY="38.0" promptText="Name" />
       <DatePicker fx:id="deadline" layoutX="9.0" layoutY="77.0" promptText="Deadline" />
       <Button layoutX="9.0" layoutY="115.0" mnemonicParsing="false" onAction="#handleAddAssignment" text="Add" />
+      <Button fx:id="cancelButton" layoutX="58.0" layoutY="115.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
    </children>
 </AnchorPane>
