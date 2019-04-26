@@ -29,4 +29,9 @@
 | 11.4.19  | 1 | sorting assignments by deadline and creating a test for delete method in dao |   
 | 11.4.19  | 1 | sequence diagram for adding a course |   
 | 11.4.19  | 1 | documentation |   
-| total   | 34|  
+| 25.4.19  | 1 | researching javafx graphs |   
+| 25.4.19  | 4 | implementing view for undone assignments |   
+| 26.4.19  | 1 | tests for dao |   
+| 26.4.19  | 1 | javafox |   
+| 26.4.19  | 2 | documentation |   
+| total   | 43 |  
