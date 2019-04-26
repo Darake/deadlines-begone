@@ -21,6 +21,24 @@ public class SQLAssignmentDao extends AbstractNamedObjectDao<Assignment> {
         super(database, tableName);
         this.courseDao = courseDao;
     }
+    
+    private Assignment findByNameAndCourse(String name, Integer courseId) throws SQLException {
+        try (Connection conn = database.getConnection()) {
+            String sql = "SELECT * FROM Assignment"
+                    + " WHERE name = ?"
+                    + " AND course_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, name);
+            stmt.setInt(2, courseId);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                return createFromRow(rs);
+            }
+        }
+    }
 
     @Override
     public Assignment create(Assignment assignment) throws SQLException {
@@ -32,7 +50,7 @@ public class SQLAssignmentDao extends AbstractNamedObjectDao<Assignment> {
             stmt.setInt(3, assignment.getCourse().getId());
             stmt.executeUpdate();
         }
-        return findByName(assignment.getName());
+        return findByNameAndCourse(assignment.getName(), assignment.getCourse().getId());
     }
 
     @Override

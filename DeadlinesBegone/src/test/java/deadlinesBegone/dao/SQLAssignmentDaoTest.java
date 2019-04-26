@@ -64,6 +64,7 @@ public class SQLAssignmentDaoTest {
     @Test
     public void createAddsAssignmentIntoDatabase() throws SQLException {
         Assignment assignment = new Assignment(null, "second", "2019/05/02", course, false);
+        assignmentDao.create(assignment);
         
         assertEquals(assignmentDao.getAll().size(), 2);
     }
