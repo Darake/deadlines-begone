@@ -32,6 +32,6 @@
 | 25.4.19  | 1 | researching javafx graphs |   
 | 25.4.19  | 4 | implementing view for undone assignments |   
 | 26.4.19  | 1 | tests for dao |   
-| 26.4.19  | 1 | javafox |   
+| 26.4.19  | 1 | javadocs |   
 | 26.4.19  | 2 | documentation |   
 | total   | 43 |  
