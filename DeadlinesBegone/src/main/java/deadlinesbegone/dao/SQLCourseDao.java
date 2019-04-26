@@ -4,6 +4,11 @@ package deadlinesbegone.dao;
 import deadlinesbegone.domain.Course;
 import java.sql.*;
 
+/**
+ * Class provides SQL actions for Courses.
+ *
+ * @param <T> 
+ */
 public class SQLCourseDao extends AbstractNamedObjectDao<Course> {
     
     public SQLCourseDao(Database database, String tableName) {
@@ -23,7 +28,7 @@ public class SQLCourseDao extends AbstractNamedObjectDao<Course> {
     }
 
     @Override
-    public Course createFromRow(ResultSet rs) throws SQLException {
+    protected Course createFromRow(ResultSet rs) throws SQLException {
         return new Course(rs.getInt("id"), rs.getString("name"));
     }
 

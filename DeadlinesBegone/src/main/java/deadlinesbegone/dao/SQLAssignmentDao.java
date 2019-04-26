@@ -8,6 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class provides SQL actions for Assignments.
+ *
+ * @param <T> 
+ */
 public class SQLAssignmentDao extends AbstractNamedObjectDao<Assignment> {
     
     private Dao courseDao;
@@ -31,7 +36,7 @@ public class SQLAssignmentDao extends AbstractNamedObjectDao<Assignment> {
     }
 
     @Override
-    public Assignment createFromRow(ResultSet rs) throws SQLException {
+    protected Assignment createFromRow(ResultSet rs) throws SQLException {
         Course course = (Course) courseDao.get(rs.getInt("course_id"));
         return new Assignment(
                 rs.getInt("id"),

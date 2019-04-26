@@ -1,6 +1,10 @@
 
 package deadlinesbegone.domain;
 
+/**
+ * Abstract class for objects with a name and an id.
+ *
+ */
 public abstract class AbstractNamedObject {
     
     private Integer id;

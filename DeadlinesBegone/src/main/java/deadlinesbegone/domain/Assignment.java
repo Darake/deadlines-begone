@@ -1,6 +1,10 @@
 
 package deadlinesbegone.domain;
 
+/**
+ * Class for assignments.
+ *
+ */
 public class Assignment extends AbstractNamedObject {
     
     private String deadline;

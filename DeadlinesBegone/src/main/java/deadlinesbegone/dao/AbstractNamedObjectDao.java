@@ -9,6 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class provides SQL actions for AbstractNamedObjects.
+ *
+ * @param <T> 
+ */
+
 public abstract class AbstractNamedObjectDao<T extends AbstractNamedObject>
         implements Dao<T, Integer> {
     
@@ -19,6 +25,7 @@ public abstract class AbstractNamedObjectDao<T extends AbstractNamedObject>
         this.database = database;
         this.tableName = tableName;
     }
+    
     
     @Override
     public List<T> getAll() throws SQLException {
@@ -35,6 +42,7 @@ public abstract class AbstractNamedObjectDao<T extends AbstractNamedObject>
                  
         return courses;
     }
+    
     
     @Override
     public T get(Integer id) throws SQLException {
@@ -84,5 +92,5 @@ public abstract class AbstractNamedObjectDao<T extends AbstractNamedObject>
     @Override
     public abstract void update(T object) throws SQLException;
 
-    public abstract T createFromRow(ResultSet rs) throws SQLException;
+    protected abstract T createFromRow(ResultSet rs) throws SQLException;
 }

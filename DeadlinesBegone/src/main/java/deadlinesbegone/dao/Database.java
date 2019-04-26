@@ -5,11 +5,22 @@ import java.io.File;
 import java.sql.*;
 import org.sqlite.SQLiteConfig;
 
+/**
+ * Class to handle SQLite database creation and connection
+ */
 public class Database {
     
     private String databaseAddress;
     private String databaseDriver;
     
+    /**
+     * Creates a new database if database with the parameter name doesn't exist.
+     * Otherwise saves the database address for future use.
+     * 
+     * @param Database's name
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public Database(String databaseName) throws ClassNotFoundException, SQLException {
         this.databaseAddress = "jdbc:sqlite:" + databaseName;
         this.databaseDriver = "org.sqlite.JDBC";
@@ -20,6 +31,12 @@ public class Database {
         }
     }
     
+    /**
+     * Returns a connection to the database with foreign keys enforced.
+     * 
+     * @return Database connection
+     * @throws SQLException 
+     */
     public Connection getConnection() throws SQLException {
         Connection connection = null;
         try {
