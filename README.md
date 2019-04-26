@@ -40,4 +40,12 @@ Checkstyle report can be generated with
 
 ```mvn jxr:jxr checkstyle:checkstyle```  
 
-Report can be found in target/site/checkstyle.html
+Report can be found in target/site/checkstyle.html  
+
+### JavaDoc  
+
+JavaDox can be generated with the following command  
+
+``` mvn javadoc:javadox ```  
+
+The generated file can be found in target/site/apidocs/index.html
