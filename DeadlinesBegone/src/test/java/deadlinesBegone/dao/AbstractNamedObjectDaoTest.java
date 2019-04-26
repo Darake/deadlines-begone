@@ -3,10 +3,12 @@ package deadlinesBegone.dao;
 import deadlinesbegone.dao.SQLCourseDao;
 import deadlinesbegone.dao.Database;
 import deadlinesbegone.dao.Dao;
+import deadlinesbegone.domain.AbstractNamedObject;
 import deadlinesbegone.domain.Course;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -58,6 +60,18 @@ public class AbstractNamedObjectDaoTest {
     public void deleteRemovesRightObjectFromDatabase() throws SQLException {
         dao.delete(2);
         
-        assertEquals(null, dao.get(2));
+        assertEquals(dao.get(2), null);
+    }
+    
+    @Test
+    public void getAllReturnsAllObjects() throws SQLException {
+        List <AbstractNamedObject> objects = dao.getAll();
+        
+        assertEquals(objects.size(), 3);
+    }
+    
+    @Test
+    public void findByNameReturnsNullIfDoesNotExist() throws SQLException {
+        assertEquals(dao.findByName("fifth"), null);
     }
 }
