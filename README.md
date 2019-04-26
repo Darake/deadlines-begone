@@ -8,7 +8,8 @@ This application helps with keeping track of ongoing courses and their deadlines
 [Timesheet](https://github.com/Darake/deadlines-begone/blob/master/documentation/timesheet.md)  
 
 ## Releases  
-[Week 5](https://github.com/Darake/deadlines-begone/releases/tag/week5)
+[Week 5](https://github.com/Darake/deadlines-begone/releases/tag/week5)  
+[Week 6](https://github.com/Darake/deadlines-begone/releases/tag/week6)  
 
 ## Terminal commands  
 
