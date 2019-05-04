@@ -17,6 +17,10 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Main class for Deadlines Begone app.
+ * 
+ */
 public class DeadlinesBegoneApp extends Application {
     
     private Stage stage;

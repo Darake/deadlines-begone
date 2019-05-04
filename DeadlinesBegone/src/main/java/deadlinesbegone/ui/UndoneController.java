@@ -16,6 +16,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Controller for Undone FXML scene
+ *
+ */
 public class UndoneController extends SubController {
 
     @FXML

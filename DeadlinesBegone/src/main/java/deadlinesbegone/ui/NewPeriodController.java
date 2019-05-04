@@ -10,6 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for NewPeriod FXML scene
+ * 
+ */
 public class NewPeriodController extends SubController {
 
     @FXML

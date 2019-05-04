@@ -20,6 +20,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
+/**
+ * Controller for TreeView FXML scene
+ * 
+ */
 public class TreeViewController extends SubController {
     private TreeItem<AbstractNamedObject> root;
     private Image checkmark = new Image(getClass().getResourceAsStream("/checkmark.png"));
@@ -65,7 +69,7 @@ public class TreeViewController extends SubController {
         }
     }
     
-    public Optional<String> showTextInputDialog(String title, String header) {
+    private Optional<String> showTextInputDialog(String title, String header) {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle(title);
         dialog.setHeaderText(header);

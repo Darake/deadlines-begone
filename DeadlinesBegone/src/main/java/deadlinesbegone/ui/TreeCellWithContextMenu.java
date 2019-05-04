@@ -15,6 +15,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * A class for defining and controlling items in TreeView
+ * 
+ */
 public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
     
     private DeadlinesBegoneService appService;

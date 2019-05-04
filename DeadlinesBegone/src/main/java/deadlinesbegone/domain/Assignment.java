@@ -2,7 +2,7 @@
 package deadlinesbegone.domain;
 
 /**
- * Class for assignments.
+ * Class for assignment objects.
  *
  */
 public class Assignment extends AbstractNamedObject {
