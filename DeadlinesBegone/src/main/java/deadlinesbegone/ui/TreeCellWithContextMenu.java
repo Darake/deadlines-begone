@@ -4,6 +4,7 @@ package deadlinesbegone.ui;
 import deadlinesbegone.domain.AbstractNamedObject;
 import deadlinesbegone.domain.Assignment;
 import deadlinesbegone.domain.Course;
+import deadlinesbegone.domain.DeadlinesBegoneService;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Comparator;
@@ -11,32 +12,31 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
     
     private ContextMenu courseMenu;
     private ContextMenu assignmentMenu;
-    private ImageView checkmarkView;
+    private ImageView checkmarkView = new ImageView(new Image(getClass().getResourceAsStream("/checkmark.png")));
 
-    public TreeCellWithContextMenu(MainController mainController) {
-        checkmarkView = new ImageView(mainController.checkmark);
-
+    public TreeCellWithContextMenu(MainController mainController, DeadlinesBegoneService appService) {
         MenuItem newAssignment = new MenuItem("New Assignment");
         newAssignment.setOnAction(e -> {
             try {
-                mainController.changeViewToNewAssignment((Course) getTreeItem().getValue());
+                mainController.showNewAssignment((Course) getTreeItem().getValue());
             } catch (IOException ex) {
                 mainController.error(ex);
             }
         });
         MenuItem deleteCourse = new MenuItem("Delete");
         deleteCourse.setOnAction(e -> {
-            TreeItem item = (TreeItem) mainController.treeView.getSelectionModel().getSelectedItem();
+            TreeItem item = (TreeItem) mainController.treeViewController.treeView.getSelectionModel().getSelectedItem();
             item.getParent().getChildren().remove(item);
             try {
-                mainController.appService.deleteCourse((Course) item.getValue());
-                mainController.changeViewToUndone();
+                appService.deleteCourse((Course) item.getValue());
+                mainController.showUndone();
             } catch (SQLException ex) {
                 mainController.error(ex);
             } catch (IOException ex) {
@@ -52,8 +52,8 @@ public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
             getTreeItem().setGraphic(checkmarkView);
             setGraphic(checkmarkView);
             try {
-                mainController.appService.markAssignmentDone((Assignment) getTreeItem().getValue());
-                mainController.changeViewToUndone();
+                appService.markAssignmentDone((Assignment) getTreeItem().getValue());
+                mainController.showUndone();
             } catch (SQLException ex) {
                 mainController.error(ex);
             } catch (IOException ex) {
@@ -62,12 +62,11 @@ public class TreeCellWithContextMenu extends TreeCell<AbstractNamedObject> {
         });
         MenuItem deleteAssignment = new MenuItem("Delete");
         deleteAssignment.setOnAction(e -> {
-            TreeItem item = (TreeItem) mainController.treeView.getSelectionModel().getSelectedItem();
+            TreeItem item = (TreeItem) mainController.treeViewController.treeView.getSelectionModel().getSelectedItem();
             item.getParent().getChildren().remove(item);
             try {
-                mainController.appService.deleteAssignment((Assignment) item.getValue());
-                mainController.clearContent();
-                mainController.changeViewToUndone();
+                appService.deleteAssignment((Assignment) item.getValue());
+                mainController.showUndone();
             } catch (SQLException ex) {
                 mainController.error(ex);
             } catch (IOException ex) {

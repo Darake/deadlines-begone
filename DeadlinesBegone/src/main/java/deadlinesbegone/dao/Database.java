@@ -12,7 +12,7 @@ public class Database {
     
     private String databaseAddress;
     private String databaseDriver;
-    
+     
     /**
      * Creates a new database if database with the parameter name doesn't exist.
      * Otherwise saves the database address for future use.
@@ -21,11 +21,11 @@ public class Database {
      * @throws ClassNotFoundException
      * @throws SQLException 
      */
-    public Database(String databaseName) throws ClassNotFoundException, SQLException {
-        this.databaseAddress = "jdbc:sqlite:" + databaseName;
+    public void setupDatabase(String dbName) throws ClassNotFoundException, SQLException {
+        this.databaseAddress = "jdbc:sqlite:" + dbName;
         this.databaseDriver = "org.sqlite.JDBC";
         Class.forName(databaseDriver);
-        File file = new File(databaseName);
+        File file = new File(dbName);
         if (!file.exists()) {
             createNewDatabase();
         }

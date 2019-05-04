@@ -41,7 +41,8 @@ public class SQLAssignmentDaoTest {
     @Before
     public void setUp() throws IOException, ClassNotFoundException, SQLException {
         File tempFolder = testFolder.newFolder("folder");
-        database = new Database(tempFolder.getAbsolutePath()+"/testDB.db");
+        database = new Database();
+        database.setupDatabase(tempFolder.getAbsolutePath()+"/testDB.db");
         Dao courseDao = new SQLCourseDao(database, "course");
         assignmentDao = new SQLAssignmentDao(database, "assignment", courseDao);
         course = (Course) courseDao.create(new Course(null, "firstCourse"));

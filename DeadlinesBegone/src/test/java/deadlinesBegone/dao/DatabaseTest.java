@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Rule;
@@ -35,7 +33,8 @@ public class DatabaseTest {
     public void databaseCreatedIfDoesntExist() throws Exception {
         File tempFolder = testFolder.newFolder("folder");
         File file = new File(tempFolder.getAbsolutePath()+"/testDB.db");
-        Database db = new Database(tempFolder.getAbsolutePath()+"/testDB.db");
+        Database db = new Database();
+        db.setupDatabase(tempFolder.getAbsolutePath()+"/testDB.db");
         
         assertEquals(true, file.exists());
     }
@@ -43,7 +42,8 @@ public class DatabaseTest {
     @Test
     public void getConnectionReturnsValidConnection() throws IOException, ClassNotFoundException, SQLException {
         File tempFolder = testFolder.newFolder("folder");
-        Database db = new Database(tempFolder.getAbsolutePath()+"/testDB.db");
+        Database db = new Database();
+        db.setupDatabase(tempFolder.getAbsolutePath()+"/testDB.db");
         Connection connection = db.getConnection();
         
         assertEquals(connection != null, true);

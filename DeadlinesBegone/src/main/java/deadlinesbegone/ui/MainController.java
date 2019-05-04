@@ -1,135 +1,106 @@
+
 package deadlinesbegone.ui;
 
-import deadlinesbegone.domain.AbstractNamedObject;
-import deadlinesbegone.domain.Assignment;
 import deadlinesbegone.domain.Course;
 import deadlinesbegone.domain.DeadlinesBegoneService;
-import deadlinesbegone.domain.TreeViewObject;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MainController implements Initializable {
-    public DeadlinesBegoneService appService;
-    private TreeItem<AbstractNamedObject> root;
-    private MainController mainController = this;
-    public Image checkmark = new Image(getClass().getResourceAsStream("/checkmark.png"));
-
-    @FXML
-    public TreeView treeView;
+    
+    private DeadlinesBegoneService appService;
+    private DeadlinesBegoneApp app;
+    
+    public TreeViewController treeViewController;
+    public UndoneController undoneController;
+    public NewAssignmentController newAssignmentController;
+    public NewPeriodController newPeriodController;
     
     @FXML
-    public AnchorPane content;
+    private AnchorPane leftPane;
+    
+    @FXML
+    private AnchorPane rightPane;
     
     public void setAppService(DeadlinesBegoneService appService) {
         this.appService = appService;
     }
     
-    public void changeViewToNewAssignment(Course course) throws IOException {
-        NewAssignmentController controller = new NewAssignmentController();
+    public void setApp(DeadlinesBegoneApp app) {
+        this.app = app;
+    }
+    
+    private void injectController(SubController controller) {
+        controller.setMainController(this);
         controller.setAppService(appService);
-        controller.setMainController(this);
-        controller.setCourse(course);
-        FXMLLoader loader = new FXMLLoader(DeadlinesBegoneApp.class.getResource("/fxml/NewAssignment.fxml"));
-        loader.setController(controller);
-        AnchorPane pane = loader.load();
-        content.getChildren().clear();
-        content.getChildren().add(pane);    
     }
     
-    public void changeViewToUndone() throws IOException {
-        UndoneController controller = new UndoneController();
-        controller.setMainController(this);
-        FXMLLoader loader = new FXMLLoader(DeadlinesBegoneApp.class.getResource("/fxml/Undone.fxml"));
-        loader.setController(controller);
-        VBox box = loader.load();
+    private void setupControllers() {
+        treeViewController = new TreeViewController();
+        injectController(treeViewController);
         
-        content.getChildren().clear();
-        content.getChildren().add(box);
-        box.prefWidthProperty().bind(content.widthProperty());
-        box.prefHeightProperty().bind(content.heightProperty());
-    }
-
-    @FXML
-    public void handleAddCourse(ActionEvent event) throws Exception {
-        Optional<String> result = showTextInputDialog("Add course", 
-                "Enter course name.");
+        undoneController = new UndoneController();
+        injectController(undoneController);
         
-        if (result.isPresent()) {
-            Course course = appService.newCourse(result.get());
-            addCourseToTree(course);
-        }
+        newAssignmentController = new NewAssignmentController();
+        injectController(newAssignmentController);
+        
+        newPeriodController = new NewPeriodController();
+        injectController(newPeriodController);
     }
     
-    @FXML
-    public Optional<String> showTextInputDialog(String title, String header) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle(title);
-        dialog.setHeaderText(header);
-        dialog.setContentText("Name:");
-        return dialog.showAndWait();
+    public void showTreeView() throws IOException {
+        FXMLLoader treeViewLoader = new FXMLLoader(DeadlinesBegoneApp.class.getResource("/fxml/TreeView.fxml"));
+        treeViewLoader.setController(treeViewController);
+        VBox box = treeViewLoader.load();
+        leftPane.getChildren().clear();
+        leftPane.getChildren().add(box);
+        box.prefWidthProperty().bind(leftPane.widthProperty());
+        box.prefHeightProperty().bind(leftPane.heightProperty());
     }
     
-    @FXML
-    private void addCourseToTree(Course course) {
-        TreeItem<AbstractNamedObject> treeCourse = new TreeItem<AbstractNamedObject>(course);
-        root.getChildren().add(treeCourse);
-        treeView.refresh();
+    public void showUndone() throws IOException {
+        FXMLLoader undoneLoader = new FXMLLoader(DeadlinesBegoneApp.class.getResource("/fxml/Undone.fxml"));
+        undoneLoader.setController(undoneController);
+        VBox box = undoneLoader.load();
+        rightPane.getChildren().clear();
+        rightPane.getChildren().add(box);
+        box.prefWidthProperty().bind(rightPane.widthProperty());
+        box.prefHeightProperty().bind(rightPane.heightProperty());
     }
     
-    @FXML
-    public void addAssignmentToTree(Assignment assignment) {
-        TreeItem<AbstractNamedObject> treeAssignment = new TreeItem<AbstractNamedObject>(assignment);
-        if (assignment.getCompleted()) {
-            treeAssignment.setGraphic(new ImageView(checkmark));
-        }
-        TreeViewObject deadline = new TreeViewObject(assignment.getId(), assignment.getDeadline());
-        TreeItem<AbstractNamedObject> treeDeadline = new TreeItem<AbstractNamedObject>(deadline);
-        treeAssignment.getChildren().add(treeDeadline);
-        for (TreeItem<AbstractNamedObject> courseNode : root.getChildren()) {
-            if (courseNode.getValue().toString().contentEquals(assignment.getCourse().getName())) {
-                courseNode.getChildren().add(treeAssignment);
-                break;
-            }
-        }
+    public void showNewAssignment(Course course) throws IOException {
+        FXMLLoader newAssignmentLoader = new FXMLLoader(DeadlinesBegoneApp.class.getResource("/fxml/NewAssignment.fxml"));
+        newAssignmentLoader.setController(newAssignmentController);
+        newAssignmentController.setCourse(course);
+        AnchorPane pane = newAssignmentLoader.load();
+        rightPane.getChildren().clear();
+        rightPane.getChildren().add(pane);    
     }
     
-    private void loadCourses() throws SQLException {
-        List<Course> courses = appService.getCourses();
-        for (Course course : courses) {
-            TreeItem<AbstractNamedObject> courseNode = new TreeItem<AbstractNamedObject>(course);
-            root.getChildren().add(courseNode);
-        }
+    public void showNewPeriod() throws IOException {
+        FXMLLoader newPeriodLoader = new FXMLLoader(DeadlinesBegoneApp.class.getResource("/fxml/NewPeriod.fxml"));
+        newPeriodLoader.setController(newPeriodController);
+        AnchorPane pane = newPeriodLoader.load();
+        rightPane.getChildren().clear();
+        rightPane.getChildren().add(pane);  
     }
     
-    private void loadAssignments() throws SQLException {
-        List<Assignment> assignments = appService.getAssignments();
-        for (Assignment assignment : assignments) {
-            addAssignmentToTree(assignment);
-        }
-    }
-    
-    public void clearContent() {
-        content.getChildren().clear();
+    public void showDefaultView() throws IOException {
+        showTreeView();
+        showUndone();
     }
     
     public void error(Exception e) {
@@ -139,35 +110,41 @@ public class MainController implements Initializable {
         error.showAndWait();
     }
     
+    @FXML
+    public void handleNewPeriod(ActionEvent event) throws IOException {
+        showNewPeriod();
+    }
+    
+    @FXML
+    public void handleLoadPeriod(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select period");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Database files", "*.period"));
+        File selectedPeriod = fileChooser.showOpenDialog(app.getStage());
+        if (!(selectedPeriod == null)) {
+            appService.loadDatabase(selectedPeriod.getAbsolutePath());
+            showDefaultView();
+        }
+    }
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL location, ResourceBundle resources) {
+        setupControllers();
         
-        root = new TreeItem<AbstractNamedObject>(new TreeViewObject(null, "Root"));
-        treeView.setRoot(root);
-        treeView.setShowRoot(false);
-        treeView.setStyle("-fx-focus-color: transparent;");
-        
-        try {
-            loadCourses();
-            loadAssignments();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<AbstractNamedObject>>() {
-            @Override
-            public TreeCell<AbstractNamedObject> call(TreeView<String> p) {
-                return new TreeCellWithContextMenu(mainController);
-              
+        System.out.println(appService.databaseExists());
+        if (appService.databaseExists()) {
+            try {
+                showDefaultView();
+            } catch (IOException ex) {
+                System.out.println(ex);
             }
-        });
-        
-        try {
-            changeViewToUndone();
-        } catch (IOException ex) {
-            System.out.println(ex);
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            try {
+                showNewPeriod();
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
         }
-    }    
+    }
+
 }

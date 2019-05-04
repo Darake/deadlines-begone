@@ -3,15 +3,24 @@ package deadlinesbegone.domain;
 
 import java.util.List;
 import deadlinesbegone.dao.Dao;
+import deadlinesbegone.dao.Database;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class DeadlinesBegoneService {
+    private Database db;
+    private Properties properties;
     private Dao courseDao;
     private Dao assigmentDao;
     private List<Assignment> assignments;
     
-    public DeadlinesBegoneService(Dao courseDao, Dao assigmentDao) {
+    public DeadlinesBegoneService(Database db, Properties properties, Dao courseDao, Dao assigmentDao) {
+        this.db = db;
+        this.properties = properties;
         this.courseDao = courseDao;
         this.assigmentDao = assigmentDao;
     }
@@ -63,5 +72,22 @@ public class DeadlinesBegoneService {
     
     public List<Assignment> getUndoneAssignments() throws SQLException {
         return assignments.stream().filter(a -> !a.getCompleted()).collect(Collectors.toList());
+    }
+
+    public void newDatabase(String name) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+        String databaseName = name + ".period";
+        properties.setProperty("database", databaseName);
+        properties.store(new FileOutputStream("config.properties"), null);
+        db.setupDatabase(databaseName);
+    }
+    
+    public void loadDatabase(String path) throws FileNotFoundException, IOException, ClassNotFoundException, SQLException {
+        properties.setProperty("database", path);
+        properties.store(new FileOutputStream("config.properties"), null);
+        db.setupDatabase(path);
+    }
+    
+    public boolean databaseExists() {
+        return !(properties.getProperty("database") == null);
     }
 }

@@ -38,7 +38,8 @@ public class AbstractNamedObjectDaoTest {
     @Before
     public void setUp() throws IOException, ClassNotFoundException, SQLException {
         File tempFolder = testFolder.newFolder("folder");
-        database = new Database(tempFolder.getAbsolutePath()+"/testDB.db");
+        database = new Database();
+        database.setupDatabase(tempFolder.getAbsolutePath()+"/testDB.db");
         dao = new SQLCourseDao(database, "course");
         dao.create(new Course(null, "first"));
         dao.create(new Course(null, "second"));

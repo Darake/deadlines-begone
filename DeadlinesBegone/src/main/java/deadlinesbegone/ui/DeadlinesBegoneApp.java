@@ -13,26 +13,43 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import deadlinesbegone.dao.Dao;
 import deadlinesbegone.dao.SQLAssignmentDao;
-
+import java.io.File;
 
 public class DeadlinesBegoneApp extends Application {
     
     private Stage stage;
     private DeadlinesBegoneService appService;
     private Scene scene;
+    private MainController controller;
+    private Database db;
+    
+    public Database getDb() {
+        return this.db;
+    }
+    
+    public Stage getStage() {
+        return stage;
+    }
     
     @Override
     public void init() throws Exception {
+        new File("config.properties").createNewFile();
+        
         Properties properties = new Properties();
         properties.load(new FileInputStream("config.properties"));
-        Database db = new Database(properties.getProperty("database"));
+        String dbName = properties.getProperty("database");
+        db = new Database();
+        if (!(dbName == null)) {
+            db.setupDatabase(dbName);
+        }
         
         Dao courseDao = new SQLCourseDao(db, "course");
         Dao assignmentDao = new SQLAssignmentDao(db, "assignment", courseDao);
-        this.appService = new DeadlinesBegoneService(courseDao, assignmentDao);
+        this.appService = new DeadlinesBegoneService(db, properties, courseDao, assignmentDao);
         
-        MainController controller = new MainController();
+        controller = new MainController();
         controller.setAppService(this.appService);
+        controller.setApp(this);
         
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/Scene.fxml"));
@@ -45,7 +62,6 @@ public class DeadlinesBegoneApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        
         this.stage.setTitle("Deadlines Begone");
         this.stage.setScene(this.scene);
         this.stage.show();
