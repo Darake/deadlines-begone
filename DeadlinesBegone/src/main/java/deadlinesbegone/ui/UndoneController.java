@@ -29,32 +29,40 @@ public class UndoneController extends SubController {
 
     @FXML
     private TableColumn<Assignment, Course> courseColumn;
+    
+    private void setupTableView() throws SQLException {
+        List<Assignment> assignmentList = appService.getUndoneAssignments();
+        ObservableList<Assignment> assignments = FXCollections.observableList(assignmentList);
+        deadlineColumn.setCellValueFactory(new PropertyValueFactory<Assignment, String>("deadline"));
+        assignmentColumn.setCellValueFactory(new PropertyValueFactory<Assignment, String>("name"));
+        courseColumn.setCellValueFactory(new PropertyValueFactory<Assignment, Course>("course")); 
+        tableView.setItems(assignments);
+        tableView.setStyle("-fx-focus-color: transparent;");
+        tableView.getSortOrder().add(deadlineColumn);
+    }
+    
+    private void setupContextMenu() {
+        MenuItem markDone = new MenuItem("Mark done");
+        markDone.setOnAction(e -> {
+            try {
+                Assignment assignment = tableView.getSelectionModel().getSelectedItem();
+                appService.markAssignmentDone(assignment);
+                tableView.getItems().remove(assignment);
+                mainController.treeViewController.treeView.refresh();
+            } catch (SQLException ex) {
+                mainController.error(ex);
+            }
+        });
+        ContextMenu menu = new ContextMenu();
+        menu.getItems().add(markDone);
+        tableView.setContextMenu(menu);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            List<Assignment> assignmentList = appService.getUndoneAssignments();
-            ObservableList<Assignment> assignments = FXCollections.observableList(assignmentList);
-            deadlineColumn.setCellValueFactory(new PropertyValueFactory<Assignment, String>("deadline"));
-            assignmentColumn.setCellValueFactory(new PropertyValueFactory<Assignment, String>("name"));
-            courseColumn.setCellValueFactory(new PropertyValueFactory<Assignment, Course>("course")); 
-            tableView.setItems(assignments);
-            tableView.setStyle("-fx-focus-color: transparent;");
-            tableView.getSortOrder().add(deadlineColumn);
-            MenuItem markDone = new MenuItem("Mark done");
-            markDone.setOnAction(e -> {
-                try {
-                    Assignment assignment = tableView.getSelectionModel().getSelectedItem();
-                    appService.markAssignmentDone(assignment);
-                    tableView.getItems().remove(assignment);
-                    mainController.treeViewController.treeView.refresh();
-                } catch (SQLException ex) {
-                    mainController.error(ex);
-                }
-            });
-            ContextMenu menu = new ContextMenu();
-            menu.getItems().add(markDone);
-            tableView.setContextMenu(menu);
+            setupTableView();
+            setupContextMenu();
         } catch (SQLException ex) {
             mainController.error(ex);
         }
