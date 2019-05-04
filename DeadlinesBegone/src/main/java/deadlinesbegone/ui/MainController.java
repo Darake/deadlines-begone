@@ -131,7 +131,6 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setupControllers();
         
-        System.out.println(appService.databaseExists());
         if (appService.databaseExists()) {
             try {
                 showDefaultView();
