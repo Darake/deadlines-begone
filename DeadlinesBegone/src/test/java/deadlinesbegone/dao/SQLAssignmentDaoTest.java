@@ -1,4 +1,4 @@
-package deadlinesBegone.dao;
+package deadlinesbegone.dao;
 
 import deadlinesbegone.dao.Dao;
 import deadlinesbegone.dao.Database;
@@ -9,10 +9,7 @@ import deadlinesbegone.domain.Course;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -27,17 +24,6 @@ public class SQLAssignmentDaoTest {
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
     
-    public SQLAssignmentDaoTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() throws IOException, ClassNotFoundException, SQLException {
         File tempFolder = testFolder.newFolder("folder");
@@ -49,17 +35,13 @@ public class SQLAssignmentDaoTest {
         Assignment assignment = new Assignment(null, "first", "2019/05/01", course, false);
         assignmentDao.create(assignment);
     }
-    
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void createReturnsAssignmentWithId() throws SQLException {
         Assignment assignment = new Assignment(null, "second", "2019/05/02", course, false);
         Assignment newAssignment = (Assignment) assignmentDao.create(assignment);
         
-        assertEquals(newAssignment.getId(), (Integer) 2);
+        assertEquals((Integer) 2, newAssignment.getId());
     }
     
     @Test
@@ -67,6 +49,6 @@ public class SQLAssignmentDaoTest {
         Assignment assignment = new Assignment(null, "second", "2019/05/02", course, false);
         assignmentDao.create(assignment);
         
-        assertEquals(assignmentDao.getAll().size(), 2);
+        assertEquals(2, assignmentDao.getAll().size());
     }
 }

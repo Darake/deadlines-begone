@@ -1,33 +1,19 @@
-package deadlinesBegone.dao;
+package deadlinesbegone.dao;
 
 import deadlinesbegone.dao.Database;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 
-/**
- *
- * @author daraku
- */
 public class DatabaseTest {
     
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
     
     @Test
     public void databaseCreatedIfDoesntExist() throws Exception {
@@ -46,7 +32,7 @@ public class DatabaseTest {
         db.setupDatabase(tempFolder.getAbsolutePath()+"/testDB.db");
         Connection connection = db.getConnection();
         
-        assertEquals(connection != null, true);
+        assertEquals(true, connection != null);
     }
 
 }

@@ -1,4 +1,4 @@
-package deadlinesBegone.dao;
+package deadlinesbegone.dao;
 
 import deadlinesbegone.dao.SQLCourseDao;
 import deadlinesbegone.dao.Database;
@@ -9,10 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Rule;
@@ -27,14 +24,6 @@ public class AbstractNamedObjectDaoTest {
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() throws IOException, ClassNotFoundException, SQLException {
         File tempFolder = testFolder.newFolder("folder");
@@ -45,34 +34,30 @@ public class AbstractNamedObjectDaoTest {
         dao.create(new Course(null, "second"));
         dao.create(new Course(null, "third"));
     }
-    
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void getReturnsRightCourse() throws SQLException {
         Course course = (Course) dao.get(2);
         
-        assertEquals(course.getName(), "second");
+        assertEquals("second", course.getName());
     }
     
     @Test
     public void deleteRemovesRightObjectFromDatabase() throws SQLException {
         dao.delete(2);
         
-        assertEquals(dao.get(2), null);
+        assertEquals(null, dao.get(2));
     }
     
     @Test
     public void getAllReturnsAllObjects() throws SQLException {
         List <AbstractNamedObject> objects = dao.getAll();
         
-        assertEquals(objects.size(), 3);
+        assertEquals(3, objects.size());
     }
     
     @Test
     public void findByNameReturnsNullIfDoesNotExist() throws SQLException {
-        assertEquals(dao.findByName("fifth"), null);
+        assertEquals(null, dao.findByName("fifth"));
     }
 }
