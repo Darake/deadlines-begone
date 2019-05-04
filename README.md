@@ -14,6 +14,7 @@ This application helps with keeping track of ongoing courses and their deadlines
 ## Releases  
 [Week 5](https://github.com/Darake/deadlines-begone/releases/tag/week5)  
 [Week 6](https://github.com/Darake/deadlines-begone/releases/tag/week6)  
+[Final release](https://github.com/Darake/deadlines-begone/releases/tag/1.0)  
 
 ## Terminal commands  
 
