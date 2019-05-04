@@ -2,9 +2,6 @@ package deadlinesbegone.domain;
 
 import deadlinesbegone.dao.Dao;
 import deadlinesbegone.dao.Database;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -31,20 +28,6 @@ public class DeadlinesBegoneServiceTest {
         appService = new DeadlinesBegoneService(db, properties, courseDao, assignmentDao);
         
         this.properties = properties;
-    }
-    
-    @Test
-    public void newDatabaseSavesNameToConfigFile() throws IOException, ClassNotFoundException, SQLException {
-        File configFile = new File("config.properties");
-        configFile.createNewFile();
-        File tempFolder = testFolder.newFolder("folder");
-        String dbPath = tempFolder.getAbsolutePath() + "db";
-        appService.newDatabase(dbPath);
-        Properties newProperties = new Properties();
-        newProperties.load(new FileInputStream("config.properties"));
-        String databaseProperty = newProperties.getProperty("database");
-        
-        assertEquals(dbPath + ".period", databaseProperty);
     }
     
     @Test
