@@ -5,13 +5,6 @@
 
 Download the latest version of the .jar file from [here.](https://github.com/Darake/deadlines-begone/releases)  
 
-### Configuration  
-
-The application expects to have a config.properties file in the directory with the following content:
-database=database.db  
-
-Where database.db can be replaced with your own database.  
-
 ### Run the program  
 
 The application can be started by typing the following in the terminal:  
@@ -19,9 +12,22 @@ The application can be started by typing the following in the terminal:
 
 
 ## Usage  
+
+### Creating a period  
+
+When the application is launched the first time, it asks a name for a new period.  
+<img src="https://raw.githubusercontent.com/Darake/deadlines-begone/master/documentation/images/i-8.png" width="450">  
+A new period can also be created by clicking "New period" in the "File" menu.  
+<img src="https://raw.githubusercontent.com/Darake/deadlines-begone/master/documentation/images/i-9.png" width="450">   
+
+### Loading an existing period  
+
+An old period can be loaded by clicking "Load period" in the "File" menu.  
+<img src="https://raw.githubusercontent.com/Darake/deadlines-begone/master/documentation/images/i-10.png" width="450">    
+
 ### Adding a course  
 
-Let's start by adding a course. By clicking the "Add course" button a popup window will appear:  
+Courses can be added to a period. By clicking the "Add course" button a popup window will appear:  
 <img src="https://raw.githubusercontent.com/Darake/deadlines-begone/master/documentation/images/i-1.png" width="450">  
 New course can be added by typing the name of the course to the textbox and clicking "OK".  
 
