@@ -40,5 +40,5 @@
 | 4.5.19  | 2 | unit tests |   
 | 4.5.19  | 1 | documentation |   
 | 5.5.19  | 1 | javadoc |   
-| 5.5.19  | 2 | documentation |   
-| total   | 57 |  
+| 5.5.19  | 3 | documentation |   
+| total   | 58 |  
