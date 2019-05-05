@@ -34,4 +34,11 @@
 | 26.4.19  | 1 | tests for dao |   
 | 26.4.19  | 1 | javadocs |   
 | 26.4.19  | 2 | documentation |   
-| total   | 43 |  
+| 3.5.19  | 1 | functionality for creating/loading periods/databases |   
+| 4.5.19  | 6 | functionality for creating/loading periods/databases |   
+| 4.5.19  | 1 | fixing checkstyle errors |   
+| 4.5.19  | 2 | unit tests |   
+| 4.5.19  | 1 | documentation |   
+| 5.5.19  | 1 | javadoc |   
+| 5.5.19  | 2 | documentation |   
+| total   | 57 |  
