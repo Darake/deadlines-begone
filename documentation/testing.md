@@ -16,7 +16,7 @@ also contains two fake DAOs.
 
 ### Coverage  
 The application's test coverage (excluding user interface) is 75% for instructions and 81% for branches.  
-image  
+<img src="https://raw.githubusercontent.com/Darake/deadlines-begone/master/documentation/images/t-1.png" width="800">    
 
 ## Manual testing  
 The application was tested on a Linux environment. All of the promised functionality in the [requirements spec](https://github.com/Darake/deadlines-begone/blob/master/documentation/Software%20requirements%20specification.md)
