@@ -45,6 +45,6 @@ CREATE TABLE Assignment (
  );
 ```  
 
-## Examples of functionality  
+## Functionality example
 #### Adding a new course  
 <img src="https://raw.githubusercontent.com/Darake/deadlines-begone/master/documentation/images/a-2.png" width="800">  
