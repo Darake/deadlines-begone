@@ -9,6 +9,8 @@ This application helps with keeping track of ongoing courses and their deadlines
 
 [Architecture](https://github.com/Darake/deadlines-begone/blob/master/documentation/architecture.md)  
 
+[Testing](https://github.com/Darake/deadlines-begone/blob/master/documentation/testing.md)  
+
 [Timesheet](https://github.com/Darake/deadlines-begone/blob/master/documentation/timesheet.md)  
 
 ## Releases  
